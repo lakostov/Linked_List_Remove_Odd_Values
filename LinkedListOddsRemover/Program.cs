@@ -45,6 +45,67 @@ namespace LinkedListOddsRemover
                 }
             }
 
+            public void RemoveNodeByPosition(int position)
+            {
+                if (Head == null || position < 1)
+                {
+                    return;
+                }
+                else if (position == 1)
+                {
+                    Head = Head.Next;
+                }
+                else
+                {
+                    //3->5->15->20->25->30->35
+                    Node previousNode = Head;
+                    Node currentNode = Head.Next;
+                    int counter = 1;
+                    while (currentNode != null && counter < position - 1)
+                    {
+                        previousNode = previousNode.Next;
+                        currentNode = currentNode.Next;
+                        counter++;
+                    }
+
+                    if (currentNode == null)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        previousNode.Next = currentNode.Next;
+                        currentNode = null;
+                    }
+
+                }
+            }
+
+            public void RemoveNodeByValue(int value)
+            {
+                if (Head == null)
+                {
+                    return;
+                }
+                else
+                {
+                    Node previousNode = Head;
+                    Node currentNode = Head.Next;
+
+                    while (currentNode != null)
+                    {
+                        if (currentNode.Value == value)
+                        {
+                            previousNode.Next = currentNode.Next;
+                            currentNode = null;
+                            return;
+                        }
+                        currentNode = currentNode.Next;
+                        previousNode = previousNode.Next;
+                    }
+                }
+            }
+
             public void PrintList()
             {
                 Node currentNode = Head;
@@ -109,6 +170,12 @@ namespace LinkedListOddsRemover
             list.PrintList();
             Console.WriteLine("This is the list with odds removed:");
             list.RemoveOddNodes();
+            list.PrintList();
+            Console.WriteLine("This is the initial list with third node removed:");
+            list.RemoveNodeByPosition(3);
+            list.PrintList();
+            Console.WriteLine("This is the initial list with value 20 removed:");
+            list.RemoveNodeByValue(20);
             list.PrintList();
         }
     }
